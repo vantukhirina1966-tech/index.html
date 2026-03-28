@@ -1,0 +1,827 @@
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Коммерческое предложение — Таргетированная реклама</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121933;
+      --card: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.12);
+      --text: #eef2ff;
+      --muted: #b7c0e0;
+      --accent: #60a5fa;
+      --accent-2: #22d3ee;
+      --success: #34d399;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(34,211,238,0.16), transparent 22%),
+        linear-gradient(180deg, #0a0f1f 0%, #0b1020 50%, #0f1731 100%);
+      line-height: 1.55;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .section { padding: 72px 0; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero {
+      padding: 38px 0 56px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-copy h1 {
+      margin: 18px 0 18px;
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-copy p {
+      margin: 0 0 28px;
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 22px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #07101f;
+      box-shadow: 0 14px 35px rgba(34,211,238,0.25);
+    }
+
+    .btn-secondary {
+      border-color: var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      backdrop-filter: blur(18px);
+    }
+
+    .photo-card {
+      overflow: hidden;
+      padding: 14px;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    .mini-card {
+      position: absolute;
+      right: -10px;
+      bottom: -24px;
+      width: min(330px, 82%);
+      padding: 14px;
+    }
+
+    .mini-card img {
+      border-radius: 16px;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .mini-card span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .stat-card {
+      padding: 24px;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: clamp(24px, 4vw, 36px);
+      margin-bottom: 8px;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .section-head {
+      max-width: 740px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin: 12px 0 14px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .grid-3,
+    .grid-2,
+    .pricing-grid,
+    .process-grid,
+    .cases-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+    .process-grid { grid-template-columns: repeat(4, 1fr); }
+    .cases-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .card {
+      padding: 26px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(96,165,250,0.45);
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .card p,
+    .card li,
+    .pricing-card li,
+    .case-card p,
+    .case-card li {
+      color: var(--muted);
+    }
+
+    .card ul,
+    .pricing-card ul,
+    .case-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .card li + li,
+    .pricing-card li + li,
+    .case-card li + li {
+      margin-top: 8px;
+    }
+
+    .accent-line {
+      width: 54px;
+      height: 5px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      margin-bottom: 18px;
+    }
+
+    .pricing-card {
+      padding: 30px;
+      position: relative;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .pricing-card.featured {
+      border-color: rgba(34,211,238,0.45);
+      transform: scale(1.02);
+    }
+
+    .pricing-card .plan {
+      color: var(--muted);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 10px;
+    }
+
+    .pricing-card h3 {
+      margin: 0 0 12px;
+      font-size: 28px;
+    }
+
+    .price {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .price small {
+      font-size: 16px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .mark {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(52,211,153,0.14);
+      color: #9ef1cd;
+      font-size: 13px;
+      border: 1px solid rgba(52,211,153,0.3);
+    }
+
+    .process-step {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-step .num {
+      font-size: 14px;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .process-step h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .case-card h3 { margin-top: 0; }
+
+    .case-result {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(52,211,153,0.08);
+      border: 1px solid rgba(52,211,153,0.18);
+      color: #c6f8e5;
+      font-weight: 600;
+    }
+
+    .faq-item + .faq-item { margin-top: 14px; }
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      padding: 18px 22px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item p {
+      margin: 0;
+      padding: 14px 22px 0;
+      color: var(--muted);
+    }
+
+    .cta {
+      padding: 38px;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: -20% auto auto -10%;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(96,165,250,0.28), transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -40% auto;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(34,211,238,0.25), transparent 62%);
+      pointer-events: none;
+    }
+
+    .cta h2 {
+      margin: 0 0 14px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
+    }
+
+    .cta p {
+      max-width: 740px;
+      margin: 0 auto 24px;
+      color: var(--muted);
+      font-size: 17px;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer {
+      padding: 30px 0 50px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .contact-box {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-pill {
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid,
+      .grid-3,
+      .pricing-grid,
+      .process-grid,
+      .cases-grid,
+      .stats,
+      .grid-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid,
+      .grid-3,
+      .pricing-grid,
+      .process-grid,
+      .cases-grid,
+      .stats,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .mini-card {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        margin-top: 16px;
+      }
+
+      .photo-card img { height: auto; }
+      .section { padding: 56px 0; }
+      .hero { padding-top: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="badge">Коммерческое предложение • таргетированная реклама для офлайн-бизнеса</div>
+        <h1>
+          Приведу <span class="gradient-text">заявки и клиентов</span><br />
+          из соцсетей в ваш бизнес
+        </h1>
+        <p>
+          Помогаю салонам красоты, фитнес-клубам, студиям, школам и локальным проектам получать
+          предсказуемый поток обращений через таргетированную рекламу. Работаю с аналитикой,
+          офферами, креативами и воронкой, а не только с запуском объявлений.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#pricing">Получить расчёт стоимости</a>
+          <a class="btn btn-secondary" href="#contact">Обсудить проект</a>
+        </div>
+
+        <div class="hero-points">
+          <div class="chip">Аудит и стратегия до запуска</div>
+          <div class="chip">Креативы + офферы + аналитика</div>
+          <div class="chip">Фокус на окупаемость рекламы</div>
+          <div class="chip">Подходит для локального бизнеса</div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="photo-card glass">
+          <!-- Замените путь на своё фото -->
+          <img src="photo-main.jpg" alt="Фото специалиста" />
+        </div>
+        <div class="mini-card glass">
+          <!-- Замените путь на фото сертификатов -->
+          <img src="certs.jpg" alt="Сертификаты и дипломы" />
+          <strong>Подтверждённая квалификация</strong>
+          <span>Сертификаты по таргетированной рекламе, обучению малого и среднего бизнеса и профессиональной подготовке.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container stats">
+      <div class="stat-card glass">
+        <strong>30 000 ₽+</strong>
+        <span>бюджет, с которого можно строить рабочую систему тестов</span>
+      </div>
+      <div class="stat-card glass">
+        <strong>1–3 недели</strong>
+        <span>на первичную аналитику, тест гипотез и поиск рабочей связки</span>
+      </div>
+      <div class="stat-card glass">
+        <strong>4 блока</strong>
+        <span>в работе: стратегия, реклама, посадочная, обработка заявок</span>
+      </div>
+      <div class="stat-card glass">
+        <strong>до 30 дней</strong>
+        <span>ориентир на быстрый возврат рекламы в нишах с коротким циклом сделки</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Для кого</div>
+          <h2>С какими бизнесами я работаю</h2>
+          <p>
+            Лучше всего таргетированная реклама показывает себя там, где можно быстро довести человека
+            до заявки, пробного визита, записи или консультации.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="accent-line"></div>
+            <h3>Бьюти и здоровье</h3>
+            <ul>
+              <li>салоны красоты</li>
+              <li>косметология</li>
+              <li>студии массажа</li>
+              <li>барбершопы</li>
+            </ul>
+          </article>
+          <article class="card">
+            <div class="accent-line"></div>
+            <h3>Спорт и развитие</h3>
+            <ul>
+              <li>фитнес-клубы</li>
+              <li>танцевальные студии</li>
+              <li>спортивные школы</li>
+              <li>детские секции</li>
+            </ul>
+          </article>
+          <article class="card">
+            <div class="accent-line"></div>
+            <h3>Образование</h3>
+            <ul>
+              <li>обучающие центры</li>
+              <li>музыкальные школы</li>
+              <li>автошколы</li>
+              <li>подготовительные курсы</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Что входит в работу</div>
+          <h2>Не просто запуск рекламы, а система привлечения клиентов</h2>
+          <p>
+            Моя задача — не запустить объявления ради охватов, а найти связку, которая даёт заявки
+            по адекватной цене и окупается в вашем бизнесе.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Стратегия и аналитика</h3>
+            <ul>
+              <li>анализ ниши, конкурентов и спроса</li>
+              <li>определение целевой аудитории и сегментов</li>
+              <li>разработка офферов под разные боли клиентов</li>
+              <li>прогноз по бюджету, лидам и тестам</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Подготовка рекламной системы</h3>
+            <ul>
+              <li>структура рекламных кампаний</li>
+              <li>создание текстов и технических заданий на креативы</li>
+              <li>подготовка лид-форм, квизов или сообщений</li>
+              <li>настройка аналитики и базовых метрик</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Запуск и оптимизация</h3>
+            <ul>
+              <li>тест гипотез по аудиториям и офферам</li>
+              <li>контроль стоимости заявки и качества лидов</li>
+              <li>отключение слабых связок и масштабирование сильных</li>
+              <li>регулярная отчётность по понятным метрикам</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Усиление конверсии</h3>
+            <ul>
+              <li>рекомендации по обработке заявок</li>
+              <li>правки посадочной страницы или сообщений</li>
+              <li>советы по скрипту менеджера</li>
+              <li>поиск причин, почему лиды не доходят до продажи</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Как строится работа</div>
+          <h2>Пошаговый процесс без хаоса</h2>
+          <p>
+            Вы понимаете, за что платите, какие этапы идут сейчас и на каком месте бизнес теряет деньги.
+          </p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-step card">
+            <div class="num">01</div>
+            <h3>Бриф и аудит</h3>
+            <p>Разбираю ваш продукт, экономику, текущий маркетинг, географию и реальные цели по заявкам.</p>
+          </article>
+          <article class="process-step card">
+            <div class="num">02</div>
+            <h3>Офферы и гипотезы</h3>
+            <p>Собираю сильные предложения под вашу аудиторию и формирую тестовый пул связок.</p>
+          </article>
+          <article class="process-step card">
+            <div class="num">03</div>
+            <h3>Запуск рекламы</h3>
+            <p>Настраиваю кампании, объявления, формы, метки и запускаю тестирование на реальных данных.</p>
+          </article>
+          <article class="process-step card">
+            <div class="num">04</div>
+            <h3>Оптимизация</h3>
+            <p>Усиливаю рабочие связки, снижаю стоимость заявки и готовлю понятные выводы для масштабирования.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Форматы сотрудничества</div>
+          <h2>Пакеты услуг</h2>
+          <p>
+            Ниже — примерная структура предложения. Стоимость можно адаптировать под ваш проект,
+            географию и объём задач.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <div class="plan">Старт</div>
+            <h3>Тестовый запуск</h3>
+            <div class="price">от 25 000 ₽ <small>/ месяц</small></div>
+            <ul>
+              <li>аудит проекта и аудитории</li>
+              <li>1–2 оффера и базовые гипотезы</li>
+              <li>запуск рекламных кампаний</li>
+              <li>контроль базовых показателей</li>
+              <li>отчёт по итогам теста</li>
+            </ul>
+          </article>
+
+          <article class="pricing-card featured">
+            <div class="mark">Оптимальный выбор</div>
+            <div class="plan">Основной</div>
+            <h3>Системное ведение</h3>
+            <div class="price">от 35 000 ₽ <small>/ месяц</small></div>
+            <ul>
+              <li>полная стратегия запуска</li>
+              <li>несколько сегментов ЦА</li>
+              <li>проработка офферов и воронки</li>
+              <li>тест и оптимизация креативов</li>
+              <li>аналитика лидов и рекомендации по продажам</li>
+            </ul>
+          </article>
+
+          <article class="pricing-card">
+            <div class="plan">Премиум</div>
+            <h3>Под ключ</h3>
+            <div class="price">от 50 000 ₽ <small>/ месяц</small></div>
+            <ul>
+              <li>глубокая аналитика ниши</li>
+              <li>расширенная воронка и сценарии прогрева</li>
+              <li>приоритет по креативам и гипотезам</li>
+              <li>регулярные созвоны и план роста</li>
+              <li>подготовка к масштабированию рекламы</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Почему выбирают меня</div>
+          <h2>Аргументы, которые усиливают доверие</h2>
+          <p>
+            Этот блок можно дополнить вашими реальными кейсами, цифрами и отзывами клиентов.
+          </p>
+        </div>
+
+        <div class="cases-grid">
+          <article class="case-card card">
+            <h3>Ориентация на бизнес-результат</h3>
+            <p>Реклама оценивается не по красивым кликам, а по заявкам, записям и продажам.</p>
+            <div class="case-result">Фокус: окупаемость и качество обращений</div>
+          </article>
+          <article class="case-card card">
+            <h3>Подтверждённое обучение</h3>
+            <p>Сертификаты и профильная подготовка усиливают экспертность в переговорах с клиентом.</p>
+            <div class="case-result">Фокус: доверие на этапе продажи услуг</div>
+          </article>
+          <article class="case-card card">
+            <h3>Подход через аналитику</h3>
+            <p>Выстраиваю рекламу от цифр бизнеса: средний чек, конверсия, цикл сделки, точка окупаемости.</p>
+            <div class="case-result">Фокус: понятные решения вместо хаотичных тестов</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Частые вопросы</div>
+          <h2>Что важно понимать до старта</h2>
+        </div>
+
+        <details class="faq-item" open>
+          <summary>Рекламный бюджет входит в стоимость?</summary>
+          <p>Нет, обычно отдельно оплачивается работа специалиста и отдельно сам рекламный бюджет площадки.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Когда ждать первые заявки?</summary>
+          <p>Первые обращения могут прийти уже в первые дни после запуска, но для объективных выводов нужен период тестов и оптимизации.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Можно ли работать без сайта?</summary>
+          <p>Да. В зависимости от ниши можно использовать лид-формы, сообщения, квизы, чат-боты или простую посадочную страницу.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Подходит ли это для локального бизнеса в городе?</summary>
+          <p>Да, особенно если у бизнеса понятный оффер, конкурентный продукт и есть готовность быстро обрабатывать заявки.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="cta glass">
+          <div class="badge">Связаться</div>
+          <h2>Готова обсудить ваш проект и собрать стратегию запуска</h2>
+          <p>
+            Напишите, какой у вас бизнес, город, средний чек и планируемый бюджет на рекламу —
+            подготовлю рекомендации по старту, связкам и ожидаемой модели привлечения заявок.
+          </p>
+          <div class="contact-box">
+            <div class="contact-pill">Telegram: @your_contact</div>
+            <div class="contact-pill">WhatsApp: +7 (___) ___-__-__</div>
+            <div class="contact-pill">Email: yourmail@example.com</div>
+          </div>
+          <div style="margin-top:24px; position:relative; z-index:1;">
+            <a class="btn btn-primary" href="mailto:yourmail@example.com">Отправить заявку</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div>© Коммерческое предложение по таргетированной рекламе. Замените контакты, фото, цены и кейсы на свои актуальные данные.</div>
+    </div>
+  </footer>
+</body>
+</html>
